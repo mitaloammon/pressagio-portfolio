@@ -1,4 +1,4 @@
-// BACKGROUND REATIVO AO MOUSE
+
 document.addEventListener('mousemove', e => {
   const x = (e.clientX / window.innerWidth) * 100;
   const y = (e.clientY / window.innerHeight) * 100;
@@ -7,7 +7,6 @@ document.addEventListener('mousemove', e => {
   document.documentElement.style.setProperty('--y', `${y}%`);
 });
 
-// Fallback simples para browsers sem scroll-timeline
 if (!CSS.supports('animation-timeline: scroll()')) {
   const items = document.querySelectorAll('.scroll-fade, .scroll-scale, .scroll-slide');
 
@@ -29,12 +28,35 @@ if (!CSS.supports('animation-timeline: scroll()')) {
 
 const aboutCard = document.querySelector('.about-card');
 
+aboutCard.addEventListener('mousemove', (e) => {
+  const rect = aboutCard.getBoundingClientRect();
+
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  const moveX = (x - centerX) / 18;
+  const moveY = (y - centerY) / 18;
+
+  aboutCard.style.transform = `
+    translate(${moveX}px, ${moveY}px)
+    rotateX(${-(moveY)}deg)
+    rotateY(${moveX}deg)
+    scale(1.03)
+  `;
+});
+
+aboutCard.addEventListener('mouseleave', () => {
+  aboutCard.style.transform = 'translate(0, 0) rotateX(0) rotateY(0) scale(1)';
+});
+
 window.addEventListener('scroll', () => {
   const rect = aboutCard.getBoundingClientRect();
   const windowHeight = window.innerHeight;
 
   if (rect.top < windowHeight - 100) {
-    aboutCard.style.transform = 'translateY(0) scale(1)';
     aboutCard.style.opacity = '1';
   }
 });

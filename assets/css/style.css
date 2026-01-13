@@ -217,13 +217,17 @@ footer {
   text-align: center;
   color: #fff;
 
-  transition: 
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
+  cursor: pointer;
+
+  transform-style: preserve-3d;
+  will-change: transform;
+
+  transition:
+    transform 0.15s ease-out,
+    box-shadow 0.3s ease;
 }
 
 .about-card:hover {
-  transform: translateY(-8px) scale(1.02);
   box-shadow: 0 0 40px rgba(255, 0, 120, 0.25);
 }
 
